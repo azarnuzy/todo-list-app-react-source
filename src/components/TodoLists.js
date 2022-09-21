@@ -3,6 +3,13 @@ import { AiFillDelete, AiFillEdit } from 'react-icons/ai';
 import data from '../data/data.json';
 
 export default function TodoLists() {
+  let localData;
+
+  if (localStorage.getItem('data') !== null) {
+    localData = JSON.parse(localStorage.getItem('data'));
+    data = [...localData];
+  }
+
   return (
     <ul className="todo-lists">
       {data.map((item) => {
