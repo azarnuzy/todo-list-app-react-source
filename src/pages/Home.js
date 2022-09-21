@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ActionsButton, { DeleteButtons } from '../components/ActionsButton';
 import Header from '../components/Header';
@@ -12,7 +12,7 @@ export default function Home({ data }) {
     return Date.now();
   }
 
-  if (activity.length > 0) {
+  if (activity) {
     data = [
       ...data,
       {

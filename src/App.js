@@ -4,6 +4,8 @@ import { Route, Routes } from 'react-router-dom';
 import data from './data/data.json';
 
 function App() {
+  const todos = [...data];
+  console.log('todos ' + todos);
   return (
     <div className="App">
       <Routes>

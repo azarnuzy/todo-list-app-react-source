@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai';
+import { useNavigate } from 'react-router-dom';
 
 export default function TodoLists({ data }) {
   const [todos, setTodos] = useState();
+  const navigate = useNavigate();
 
   function removeTodoHandler(todoId) {
-    const filteredTodos = data.filter((todo) => {
+    data = data.filter((todo) => {
       return todo.id !== todoId;
     });
+
+    console.log(data);
   }
 
   return (
