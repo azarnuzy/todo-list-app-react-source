@@ -1,20 +1,13 @@
 import React, { useState } from 'react';
 import { AiOutlineBook } from 'react-icons/ai';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, redirect, useNavigate } from 'react-router-dom';
 import PageTitle from '../components/PageTitle';
-import data from '../data/data.json';
 
 export default function TodoInput() {
   const [activity, setActivity] = useState('');
   const [todos, setTodos] = useState([]);
   const [message, setMessage] = useState([]);
   const navigate = useNavigate();
-
-  localStorage.setItem('data', JSON.stringify(todos));
-
-  function generateId() {
-    return Date.now();
-  }
 
   function saveTodoHandler(e) {
     e.preventDefault();
@@ -25,17 +18,7 @@ export default function TodoInput() {
 
     setMessage('');
 
-    setTodos([
-      ...data,
-      {
-        id: generateId(),
-        task: activity,
-        complete: false,
-      },
-    ]);
-
-    // console.log(todos);
-
+    navigate(`/${activity}`);
     setActivity('');
   }
 
@@ -69,7 +52,7 @@ export default function TodoInput() {
               Submit
             </button>
             <Link
-              to="/"
+              to={`/`}
               className="border border-y-[1px] w-auto p-2 focus:outline-none border-slate-300 bg-[#d93649] hover:opacity-90 text-white rounded-md"
             >
               Back

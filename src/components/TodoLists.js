@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai';
-import data from '../data/data.json';
 
-export default function TodoLists() {
-  let localData;
+export default function TodoLists({ data }) {
+  const [todos, setTodos] = useState();
 
-  if (localStorage.getItem('data') !== null) {
-    localData = JSON.parse(localStorage.getItem('data'));
-    data = [...localData];
+  function removeTodoHandler(todoId) {
+    const filteredTodos = data.filter((todo) => {
+      return todo.id !== todoId;
+    });
   }
 
   return (
@@ -31,7 +31,7 @@ export default function TodoLists() {
               <button>
                 <AiFillEdit className="text-[#f0bf44] mx-3" />
               </button>
-              <button>
+              <button onClick={removeTodoHandler.bind(this, item.id)}>
                 <AiFillDelete className="text-[#ce374d]" />
               </button>
             </div>
