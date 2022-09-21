@@ -37,6 +37,7 @@ export default function Home() {
                 <input
                   type="checkbox"
                   checked={item.complete}
+                  readOnly
                   className="accent-lime-500 text-white"
                 />
                 <button>

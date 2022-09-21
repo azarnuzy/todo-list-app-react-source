@@ -1,5 +1,6 @@
 import React from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
+import { Link } from 'react-router-dom';
 
 export default function Header() {
   return (
@@ -20,9 +21,12 @@ export default function Header() {
         <button className="w-[64%] hover:opacity-90 p-2 bg-[#16a3b5] rounded-md text-white">
           Search
         </button>
-        <button className="hover:opacity-90 py-2 px-6 bg-[#16a3b5] rounded-md text-white">
+        <Link
+          to="/todo"
+          className="hover:opacity-90 py-2 px-6 bg-[#16a3b5] rounded-md text-white"
+        >
           Add New Task
-        </button>
+        </Link>
       </div>
     </div>
   );
