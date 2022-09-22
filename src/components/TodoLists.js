@@ -1,11 +1,10 @@
 import React from 'react';
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai';
 
-export default function TodoLists({ data }) {
-  console.log(data);
+export default function TodoLists({ todos, deleteTask }) {
   return (
     <ul className="todo-lists">
-      {data.map((item) => {
+      {todos.map((item) => {
         const lineThrough = item.complete ? 'line-through text-[#d93649]' : '';
         return (
           <li
@@ -23,7 +22,7 @@ export default function TodoLists({ data }) {
               <button>
                 <AiFillEdit className="text-[#f0bf44] mx-3" />
               </button>
-              <button>
+              <button onClick={() => deleteTask(item.id)}>
                 <AiFillDelete className="text-[#ce374d]" />
               </button>
             </div>

@@ -1,14 +1,20 @@
 import Home from './pages/Home';
 import TodoInput from './pages/TodoInput';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import data from './data/data.json';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function App() {
-  const navigate = useNavigate();
   const [todos, setTodos] = useState([]);
-
   const [newTask, setNewTask] = useState('');
+
+  const getTodos = () => {
+    setTodos([...data]);
+  };
+
+  useEffect(() => {
+    getTodos();
+  }, []);
 
   function generateId() {
     return Date.now();
@@ -17,7 +23,6 @@ function App() {
   const addTask = () => {
     if (newTask) {
       setTodos([
-        ...data,
         ...todos,
         {
           id: generateId(),
@@ -27,15 +32,20 @@ function App() {
       ]);
       setNewTask('');
     }
+  };
 
-    navigate('/');
+  const deleteTask = (id) => {
+    let filteredTask = todos.filter((todo) => todo.id !== id);
+    setTodos(filteredTask);
   };
 
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Home data={todos} />} />
-        <Route path=":activityParams" element={<Home data={todos} />} />
+        <Route
+          path="/"
+          element={<Home todos={todos} deleteTask={deleteTask} />}
+        />
         <Route
           path="todo"
           element={
