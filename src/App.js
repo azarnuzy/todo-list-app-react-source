@@ -84,6 +84,10 @@ function App() {
       return arrTodos.filter((todo) => todo.complete === true);
     } else if (filterAct === 'select-todo') {
       return arrTodos.filter((todo) => todo.complete === false);
+    } else if (filterAct === 'select-search') {
+      return arrTodos.filter((todo) => {
+        return todo.task.toUpperCase().indexOf(activity.toUpperCase()) > -1;
+      });
     } else {
       return arrTodos;
     }
@@ -106,6 +110,19 @@ function App() {
     setTempTodos(filteredTodos);
   };
 
+  const getSearch = (e) => {
+    const activity = e.target.value;
+    setActivity(activity);
+  };
+
+  const searchTodos = () => {
+    setFilterACt('select-search');
+    const filteredTodos = [...todos].filter((todo) => {
+      return todo.task.toUpperCase().indexOf(activity.toUpperCase()) > -1;
+    });
+    setTempTodos(filteredTodos);
+  };
+
   return (
     <div className="App">
       <Routes>
@@ -121,6 +138,9 @@ function App() {
               selectAllTodos={selectAllTodos}
               selectDoneTodos={selectDoneTodos}
               selectTodos={selectTodos}
+              activity={activity}
+              getSearch={getSearch}
+              searchTodos={searchTodos}
             />
           }
         />
