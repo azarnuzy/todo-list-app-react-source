@@ -3,10 +3,10 @@ import { AiOutlineBook } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import PageTitle from '../components/PageTitle';
 
-export default function TodoInput({ activity, setActivity, saveTodoHandler }) {
+export default function TodoUpdate({ updateData, changeTodo, updateTodo }) {
   return (
     <div className=" m-auto max-w-screen-lg ">
-      <PageTitle>TodoInput</PageTitle>
+      <PageTitle>TodoUpdate</PageTitle>
       <div className="border border-slate-300 p-4 rounded-md">
         <div className="search-input flex">
           <label htmlFor="input-todo">
@@ -15,8 +15,8 @@ export default function TodoInput({ activity, setActivity, saveTodoHandler }) {
           </label>
           <input
             placeholder="Input/Add Todo"
-            value={activity}
-            onChange={(e) => setActivity(e.target.value)}
+            value={updateData.task}
+            onChange={(e) => changeTodo(e)}
             className="border border-y-[1px] w-full p-2 focus:outline-none border-slate-300 rounded-r-md input-todo"
             id="input-todo"
           />
@@ -24,11 +24,10 @@ export default function TodoInput({ activity, setActivity, saveTodoHandler }) {
         {/* {message && <i className="text-[#d93649] mb-3 block">{message} </i>} */}
         <div className="action-button flex gap-4 mt-3">
           <button
-            type="submit"
-            onClick={saveTodoHandler}
+            onClick={updateTodo}
             className="w-full hover:opacity-90 p-2 bg-[#16a3b5] rounded-md text-white"
           >
-            Submit
+            Update
           </button>
           <Link
             to={`/`}
