@@ -4,14 +4,17 @@ import { useNavigate } from 'react-router-dom';
 
 export default function TodoLists({
   todos,
+  tempTodos,
   deleteTask,
   taskDone,
   setUpdateData,
 }) {
   const navigate = useNavigate();
+  const todolist = tempTodos.length > 0 ? tempTodos : todos;
+
   return (
     <ul className="todo-lists">
-      {todos
+      {todolist
         .sort((a, b) => (a.id > b.id ? 1 : -1))
         .map((item) => {
           const lineThrough = item.complete

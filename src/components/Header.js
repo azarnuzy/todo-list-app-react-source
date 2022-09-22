@@ -2,7 +2,7 @@ import React from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 
-export default function Header({ data }) {
+export default function Header() {
   return (
     <div className="border border-slate-300 p-4 rounded-md">
       <div className="search-input flex mb-6">

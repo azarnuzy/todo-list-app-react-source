@@ -8,7 +8,8 @@ import TodoUpdate from './pages/TodoUpdate';
 function App() {
   const [todos, setTodos] = useState([]);
   const [activity, setActivity] = useState('');
-
+  const [tempTodos, setTempTodos] = useState([]);
+  const [filterAct, setFilterACt] = useState('');
   const [updateData, setUpdateData] = useState('');
   const navigate = useNavigate();
 
@@ -25,6 +26,7 @@ function App() {
   }
 
   const saveTodoHandler = () => {
+    setTempTodos([]);
     if (activity) {
       setTodos([
         ...todos,
@@ -39,7 +41,8 @@ function App() {
   };
 
   const deleteTask = (id) => {
-    let filteredTask = todos.filter((todo) => todo.id !== id);
+    const filteredTask = todos.filter((todo) => todo.id !== id);
+    setTempTodos(setTempAction(filterAct, filteredTask));
     setTodos(filteredTask);
   };
 
@@ -51,7 +54,7 @@ function App() {
 
       return todo;
     });
-
+    setTempTodos(setTempAction(filterAct, activity));
     setTodos(activity);
   };
 
@@ -71,8 +74,36 @@ function App() {
     );
 
     const updatedObject = [...filteredTodos, updateData];
+    setTempTodos(setTempAction(filterAct, updatedObject));
     setTodos(updatedObject);
     navigate('/');
+  };
+
+  const setTempAction = (filterAct, arrTodos) => {
+    if (filterAct === 'select-done') {
+      return arrTodos.filter((todo) => todo.complete === true);
+    } else if (filterAct === 'select-todo') {
+      return arrTodos.filter((todo) => todo.complete === false);
+    } else {
+      return arrTodos;
+    }
+  };
+
+  const selectAllTodos = () => {
+    setFilterACt('select-all');
+    setTempTodos(todos);
+  };
+
+  const selectDoneTodos = () => {
+    setFilterACt('select-done');
+    const filteredTodos = [...todos].filter((todo) => todo.complete === true);
+    setTempTodos(filteredTodos);
+  };
+
+  const selectTodos = () => {
+    setFilterACt('select-todo');
+    const filteredTodos = [...todos].filter((todo) => todo.complete === false);
+    setTempTodos(filteredTodos);
   };
 
   return (
@@ -86,6 +117,10 @@ function App() {
               deleteTask={deleteTask}
               taskDone={taskDone}
               setUpdateData={setUpdateData}
+              tempTodos={tempTodos}
+              selectAllTodos={selectAllTodos}
+              selectDoneTodos={selectDoneTodos}
+              selectTodos={selectTodos}
             />
           }
         />
