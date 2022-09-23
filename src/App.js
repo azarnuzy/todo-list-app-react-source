@@ -12,6 +12,7 @@ function App() {
   const [tempTodos, setTempTodos] = useState([]);
   const [filterAct, setFilterACt] = useState('');
   const [updateData, setUpdateData] = useState('');
+  const [search, setSearch] = useState('');
   const navigate = useNavigate();
 
   const getTodos = () => {
@@ -27,10 +28,29 @@ function App() {
   }
 
   const notification = (status, msg, task) => {
-    Swal.fire({
+    const notif = Swal.fire({
       icon: status,
       title: msg,
       text: `Task: ${task}`,
+    });
+
+    return notif;
+  };
+
+  const deleteNotification = (doDelete) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#16a3b5',
+      cancelButtonColor: '#d93649',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire('Deleted!', `Your task has been deleted.`, 'success');
+        doDelete();
+      }
     });
   };
 
@@ -54,22 +74,13 @@ function App() {
   };
 
   const deleteTask = (id) => {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#16a3b5',
-      cancelButtonColor: '#d93649',
-      confirmButtonText: 'Yes, delete it!',
-    }).then((result) => {
+    const doDelete = () => {
       const filteredTask = todos.filter((todo) => todo.id !== id);
       setTempTodos(setTempAction(filterAct, filteredTask));
       setTodos(filteredTask);
-      if (result.isConfirmed) {
-        Swal.fire('Deleted!', `Your task has been deleted.`, 'success');
-      }
-    });
+    };
+
+    deleteNotification(doDelete);
   };
 
   const taskDone = (id) => {
@@ -138,16 +149,35 @@ function App() {
   };
 
   const getSearch = (e) => {
-    const activity = e.target.value;
-    setActivity(activity);
+    const search = e.target.value;
+    setSearch(search);
   };
 
   const searchTodos = () => {
     setFilterACt('select-search');
     const filteredTodos = [...todos].filter((todo) => {
-      return todo.task.toUpperCase().indexOf(activity.toUpperCase()) > -1;
+      return todo.task.toUpperCase().indexOf(search.toUpperCase()) > -1;
     });
     setTempTodos(filteredTodos);
+  };
+
+  const deleteDoneTask = () => {
+    const doDelete = () => {
+      const filteredTask = todos.filter((todo) => todo.complete === false);
+      setTempTodos(setTempAction(filterAct, filteredTask));
+      setTodos(filteredTask);
+    };
+
+    deleteNotification(doDelete);
+  };
+
+  const deleteAllTask = () => {
+    const doDelete = () => {
+      setTempTodos([]);
+      setTodos([]);
+    };
+
+    deleteNotification(doDelete);
   };
 
   return (
@@ -165,9 +195,11 @@ function App() {
               selectAllTodos={selectAllTodos}
               selectDoneTodos={selectDoneTodos}
               selectTodos={selectTodos}
-              activity={activity}
+              search={search}
               getSearch={getSearch}
               searchTodos={searchTodos}
+              deleteDoneTask={deleteDoneTask}
+              deleteAllTask={deleteAllTask}
             />
           }
         />

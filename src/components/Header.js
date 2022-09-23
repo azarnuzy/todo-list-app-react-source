@@ -2,7 +2,7 @@ import React from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 
-export default function Header({ activity, getSearch, searchTodos }) {
+export default function Header({ search, getSearch, searchTodos }) {
   return (
     <div className="border border-slate-300 p-4 sm:rounded-md">
       <div className="search-input flex mb-6">
@@ -13,7 +13,7 @@ export default function Header({ activity, getSearch, searchTodos }) {
         <input
           type="text"
           placeholder="Search Todo"
-          value={activity}
+          value={search}
           onChange={(e) => getSearch(e)}
           className="border border-y-[1px] w-full  sm:w-3/5 p-2 focus:outline-none border-slate-300 rounded-r-md search-todo"
           id="search-todo"

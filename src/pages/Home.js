@@ -13,18 +13,16 @@ export default function Home({
   selectAllTodos,
   selectDoneTodos,
   selectTodos,
-  activity,
+  search,
   getSearch,
   searchTodos,
+  deleteDoneTask,
+  deleteAllTask,
 }) {
   return (
     <div className=" m-auto max-w-screen-lg">
       <PageTitle>TodoSearch</PageTitle>
-      <Header
-        activity={activity}
-        getSearch={getSearch}
-        searchTodos={searchTodos}
-      />
+      <Header search={search} getSearch={getSearch} searchTodos={searchTodos} />
       <h2 className="text-[28px] font-medium text-center m-5">TodoList</h2>
       <ActionsButton
         selectAllTodos={selectAllTodos}
@@ -38,7 +36,10 @@ export default function Home({
         taskDone={taskDone}
         setUpdateData={setUpdateData}
       />
-      <DeleteButtons />
+      <DeleteButtons
+        deleteDoneTask={deleteDoneTask}
+        deleteAllTask={deleteAllTask}
+      />
     </div>
   );
 }

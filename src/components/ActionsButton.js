@@ -29,13 +29,19 @@ export default function ActionsButton({
   );
 }
 
-export function DeleteButtons() {
+export function DeleteButtons({ deleteDoneTask, deleteAllTask }) {
   return (
     <div className="delete-action-buttons flex gap-5 mb-10">
-      <button className="bg-[#d93649] p-2 rounded-md w-1/2 text-white">
+      <button
+        className="bg-[#d93649] p-2 rounded-md w-1/2 text-white"
+        onClick={deleteDoneTask}
+      >
         Delete done tasks
       </button>
-      <button className="bg-[#d93649] p-2 rounded-md w-1/2 text-white">
+      <button
+        className="bg-[#d93649] p-2 rounded-md w-1/2 text-white"
+        onClick={deleteAllTask}
+      >
         Delete all tasks
       </button>
     </div>
