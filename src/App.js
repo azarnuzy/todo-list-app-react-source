@@ -4,6 +4,7 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 import data from './data/data.json';
 import { useEffect, useState } from 'react';
 import TodoUpdate from './pages/TodoUpdate';
+import Swal from 'sweetalert2';
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -25,6 +26,14 @@ function App() {
     return Date.now();
   }
 
+  const notification = (status, msg, task) => {
+    Swal.fire({
+      icon: status,
+      title: msg,
+      text: `Task: ${task}`,
+    });
+  };
+
   const saveTodoHandler = () => {
     setTempTodos([]);
     if (activity) {
@@ -36,14 +45,31 @@ function App() {
           complete: false,
         },
       ]);
+
+      notification('success', 'Your task: has been saved', activity);
       setActivity('');
+    } else {
+      notification('warning', 'Insert Your Activity', '-');
     }
   };
 
   const deleteTask = (id) => {
-    const filteredTask = todos.filter((todo) => todo.id !== id);
-    setTempTodos(setTempAction(filterAct, filteredTask));
-    setTodos(filteredTask);
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#16a3b5',
+      cancelButtonColor: '#d93649',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      const filteredTask = todos.filter((todo) => todo.id !== id);
+      setTempTodos(setTempAction(filterAct, filteredTask));
+      setTodos(filteredTask);
+      if (result.isConfirmed) {
+        Swal.fire('Deleted!', `Your task has been deleted.`, 'success');
+      }
+    });
   };
 
   const taskDone = (id) => {
@@ -76,6 +102,7 @@ function App() {
     const updatedObject = [...filteredTodos, updateData];
     setTempTodos(setTempAction(filterAct, updatedObject));
     setTodos(updatedObject);
+    notification('success', 'Your task has been updated', updateData.task);
     navigate('/');
   };
 

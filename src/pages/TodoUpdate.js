@@ -21,7 +21,6 @@ export default function TodoUpdate({ updateData, changeTodo, updateTodo }) {
             id="input-todo"
           />
         </div>
-        {/* {message && <i className="text-[#d93649] mb-3 block">{message} </i>} */}
         <div className="action-button flex gap-4 mt-3">
           <button
             onClick={updateTodo}
