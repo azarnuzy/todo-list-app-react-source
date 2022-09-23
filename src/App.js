@@ -66,7 +66,7 @@ function App() {
         },
       ]);
 
-      notification('success', 'Your task: has been saved', activity);
+      notification('success', 'Your task has been saved', activity);
       setActivity('');
     } else {
       notification('warning', 'Insert Your Activity', '-');
